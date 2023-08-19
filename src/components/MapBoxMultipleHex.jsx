@@ -17,10 +17,6 @@ const formatDateTime= "DD/MM/YYYY HH:mm:ss"
 const firstDateTime = moment(sortTaxiData[0].date_time, formatDateTime)
 const lastDateTime = moment(sortTaxiData[sortTaxiData.length - 1].date_time, formatDateTime)
 
-const timePeriods = Object.keys(singaporeTaxiHexagon);
-
-// console.log(timePeriods);
-
 const dateTimes = [];
 let datetime = firstDateTime;
 sortTaxiData.forEach(() => {
@@ -33,12 +29,14 @@ sortTaxiData.forEach(() => {
 function MapBox() {
 
     const [singaporeHexagonsArr, setSingaporeHexagonsArr] = useState([]);
-    const [sliderTitle, setSliderTitle] = useState(timePeriods[0].substring(11,16) + " - " + timePeriods[0].substring(31,36));
+    const [sliderTitle, setSliderTitle] = useState(dateTimes[0].format('HH:mm') + ' - ' + dateTimes[1].format('HH:mm'));
     const [currentStep, setCurrentStep] = useState(1);
 
     
 
     const getHexagon = (step) => {
+      console.log("getHexagon() called");
+
       const singaporeHexagonsObj = singaporeTaxiHexagon[dateTimes[step - 1].format(formatDateTime) + '-'+ dateTimes[step].format(formatDateTime)]
       const sgHexagonsArr = [];
 
@@ -64,6 +62,9 @@ function MapBox() {
             },
           };
       });
+
+      console.log(rs);
+
       setSingaporeHexagonsArr(rs);
     }
 
@@ -72,6 +73,8 @@ function MapBox() {
       setCurrentStep(step);
       setSliderTitle(dateTimes[step - 1].format('HH:mm') + ' - ' + dateTimes[step].format('HH:mm'))
       getHexagon(step);
+
+      console.log("getStep() called");
     };
   
     const getStyle = (row) => {
@@ -207,7 +210,7 @@ function MapBox() {
               <div className="label">1500+</div>
             </div>
             <div className="slider">
-              <h4 className="slider-title">Time Window: {sliderTitle}</h4>
+              <h4 className="slider-title">Time Window: ({sliderTitle})</h4>
               <Slider
                 onChange={setStep}
                 min={1}
