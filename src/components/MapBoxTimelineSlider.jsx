@@ -1,6 +1,6 @@
 import "mapbox-gl/dist/mapbox-gl.css";
 import Map, { Layer, Source } from "react-map-gl";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { cellToBoundary } from "h3-js";
 
 import './MapBoxTimelineSlider.scss';
@@ -17,16 +17,14 @@ function MapBox() {
     const [currentStep, setCurrentStep] = useState(0);
 
     const updateHexagonData = (step) => {  
-        const singaporeHexagonsObj = singaporeTaxiHexagons[timePeriods[step]];
-  
-        const sgHexagonsArr = [];
-  
-        for (const hexagon in singaporeHexagonsObj) {
-            sgHexagonsArr.push({
-              hexindex7: hexagon,
-              bookingCount: singaporeHexagonsObj[hexagon]
-            });
-        }
+      const singaporeHexagonsArr = singaporeTaxiHexagons[timePeriods[step]];
+      const sgHexagonsArr = [];
+      singaporeHexagonsArr.forEach(singaporeHexagon => {
+        sgHexagonsArr.push({
+          hexindex7: singaporeHexagon.key,
+          bookingCount: singaporeHexagon.count
+        });
+      })
         
         const rs = sgHexagonsArr.map((row) => {
             const style = getStyle(row);
@@ -51,8 +49,6 @@ function MapBox() {
         setCurrentStep(step);
         setSliderTitle(timePeriods[step].substring(11,16) + " - " + timePeriods[step].substring(31,36))
         updateHexagonData(step);
-
-        console.log("setStep() called" + " step:" + step);
     };
 
     const getStyle = (row) => {
