@@ -1,69 +1,60 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import "mapbox-gl/dist/mapbox-gl.css";
 import Map, { Layer, Source } from "react-map-gl";
 import React, { useEffect, useState } from "react";
 import { cellToBoundary } from "h3-js";
-import 'rc-slider/assets/index.css';
 
-import './MapBoxMultipleHex.scss';
+import './MapBoxTimelineSlider.scss';
 import Slider from "rc-slider";
+import 'rc-slider/assets/index.css';
 
 const singaporeTaxiHexagons = require('../data/singapore_taxi_hexagons.json');
 const timePeriods = Object.keys(singaporeTaxiHexagons);
-
 
 function MapBox() {
 
     const [singaporeHexagonsArr, setSingaporeHexagonsArr] = useState([]);
     const [sliderTitle, setSliderTitle] = useState(timePeriods[0].substring(11,16) + " - " + timePeriods[0].substring(31,36));
-    const [currentStep, setCurrentStep] = useState(1);
+    const [currentStep, setCurrentStep] = useState(0);
 
-    
-
-    const updateHexagonData = (step) => {
-      // console.log("getHexagon() called");
-
-      const singaporeHexagonsObj = singaporeTaxiHexagons[timePeriods[step - 1]];
-
-      const sgHexagonsArr = [];
-
-      for (const hexagon in singaporeHexagonsObj) {
-          sgHexagonsArr.push({
-            hexindex7: hexagon,
-            bookingCount: singaporeHexagonsObj[hexagon]
-          });
-      }
-      
-      const rs = sgHexagonsArr.map((row) => {
-          const style = getStyle(row);
-          return {
-            type: "Feature",
-            properties: {
-              color: style.color,
-              opacity: style.opacity,
-              id: row.hexindex7,
-            },
-            geometry: {
-              type: "Polygon",
-              coordinates: [cellToBoundary(row.hexindex7, true)],
-            },
-          };
-      });
-
-      // console.log(rs);
-
-      setSingaporeHexagonsArr(rs);
-    }
-
-    const setStep = (step) => {
-
-      setCurrentStep(step);
-      setSliderTitle(timePeriods[0].substring(11,16) + " - " + timePeriods[0].substring(31,36))
-      updateHexagonData(step);
-
-      // console.log("getStep() called");
-    };
+    const updateHexagonData = (step) => {  
+        const singaporeHexagonsObj = singaporeTaxiHexagons[timePeriods[step]];
   
+        const sgHexagonsArr = [];
+  
+        for (const hexagon in singaporeHexagonsObj) {
+            sgHexagonsArr.push({
+              hexindex7: hexagon,
+              bookingCount: singaporeHexagonsObj[hexagon]
+            });
+        }
+        
+        const rs = sgHexagonsArr.map((row) => {
+            const style = getStyle(row);
+            return {
+              type: "Feature",
+              properties: {
+                color: style.color,
+                opacity: style.opacity,
+                id: row.hexindex7,
+              },
+              geometry: {
+                type: "Polygon",
+                coordinates: [cellToBoundary(row.hexindex7, true)],
+              },
+            };
+        });
+  
+        setSingaporeHexagonsArr(rs);
+      }
+
+    const handleSliderChange = (step) => {
+        setCurrentStep(step);
+        setSliderTitle(timePeriods[step].substring(11,16) + " - " + timePeriods[step].substring(31,36))
+        updateHexagonData(step);
+
+        console.log("setStep() called" + " step:" + step);
+    };
+
     const getStyle = (row) => {
         const styles = [
           {
@@ -109,10 +100,10 @@ function MapBox() {
     };
 
     const onLoad = () => {
-      updateHexagonData(1);
-
+        console.log("onLoad() called");
+        updateHexagonData(0);
     };
-  
+
     return (
       
         <div className="wrapper">
@@ -167,8 +158,8 @@ function MapBox() {
             <div className="slider">
               <h4 className="slider-title">Time Window: ({sliderTitle})</h4>
               <Slider
-                onChange={setStep}
-                min={1}
+                onChange={handleSliderChange}
+                min={0}
                 max={timePeriods.length - 1}
                 defaultValue={currentStep}
                 value={currentStep}
@@ -177,7 +168,9 @@ function MapBox() {
           </div>
         </div>
     );
-  
-};
-  
+
+
+
+}
+
 export default MapBox;

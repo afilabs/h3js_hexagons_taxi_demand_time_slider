@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import MapBoxSvg from './components/MapBoxMultipleHex';
+import MapBoxSvg from './components/MapBoxTimelineSlider';
 import reportWebVitals from './reportWebVitals';
 import 'rc-slider/assets/index.css';
 
