@@ -80,16 +80,16 @@ function MapBox() {
           return {opacity: 0};
         }
     
-        if (Number(row.bookingCount) < 250) {
+        if (Number(row.bookingCount) < 50) {
           return styles[0];
         }
-        if (Number(row.bookingCount) < 500) {
+        if (Number(row.bookingCount) < 100) {
           return styles[1];
         }
-        if (Number(row.bookingCount) < 1000) {
+        if (Number(row.bookingCount) < 150) {
           return styles[2];
         }
-        if (Number(row.bookingCount) < 1500) {
+        if (Number(row.bookingCount) < 200) {
           return styles[3];
         }
         return styles[4];
@@ -146,10 +146,10 @@ function MapBox() {
             <div className="row colors"></div>
             <div className="row labels">
               <div className="label">1</div>
-              <div className="label">250</div>
-              <div className="label">500</div>
-              <div className="label">1000</div>
-              <div className="label">1500+</div>
+              <div className="label">50</div>
+              <div className="label">100</div>
+              <div className="label">150</div>
+              <div className="label">200+</div>
             </div>
             <div className="slider">
               <h4 className="slider-title">Time Window: ({sliderTitle})</h4>
