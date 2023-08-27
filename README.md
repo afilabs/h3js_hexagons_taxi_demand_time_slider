@@ -1,7 +1,6 @@
 # h3js_hexagons_taxi_demand_time_slider
 
-[![Visualizing taxi demand over time with Mapbox and React range slider rc slider](https://blog.afi.io/content/media/2023/08/dQQQxgP.mp4)](https://blog.afi.io/content/media/2023/08/dQQQxgP.mp4)
-
+![Visualizing taxi demand over time with Mapbox and React range slider rc slider](https://www.dropbox.com/scl/fi/aec81l3ee7hp01cy7j6jy/animated_taxi_demand.gif?rlkey=29ke4rskwctgq6rxuh3krqzll&dl=0 "UVisualizing taxi demand over time with Mapbox and React range slider rc slider")
 
 Taken from: 
 - [Uber h3 js tutorial: How to draw hexagons on a map (part 1 of 3)](https://www.afi.io/blog/uber-h3-js-tutorial-how-to-draw-hexagons-on-a-map/)
