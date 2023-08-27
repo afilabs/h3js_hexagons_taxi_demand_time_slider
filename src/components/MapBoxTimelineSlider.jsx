@@ -112,7 +112,7 @@ function MapBox() {
                 pitch: 0,
               }}
               mapStyle="mapbox://styles/mapbox/light-v9"
-              mapboxAccessToken="pk.eyJ1IjoidGhlcHJvZiIsImEiOiJja3Q5amlqaXgxNjUwMm5wY3NrdmplbzVxIn0.C3zhU7lekidOJmARhNyBdw"
+              mapboxAccessToken={process.env.REACT_APP_MAPBOX_KEY}
               style={{
                 height: "100vh",
                 width: "100vw",
