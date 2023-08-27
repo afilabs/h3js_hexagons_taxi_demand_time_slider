@@ -96,7 +96,6 @@ function MapBox() {
     };
 
     const onLoad = () => {
-        console.log("onLoad() called");
         updateHexagonData(0);
     };
 
